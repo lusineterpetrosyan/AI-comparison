@@ -39,6 +39,16 @@ export function asFallibleAsyncResponse<T>(data: T): Promise<T> {
 }
 
 
+// Result by category function
+// ----------------------------------------------------------------------------
+
+export function resultByType(tasks: Task[], type: string = 'category') {
+    return tasks.reduce((r, o) => {
+      if (r[o[type]] || (r[o[type]]=[])) r[o[type]].push(o);
+      return r;
+    }, {});
+}
+
 // Average function
 // ----------------------------------------------------------------------------
 
@@ -48,3 +58,4 @@ export function averageScores(args: {avg, n}, item: Task) {
         n:   args.n + 1,
     };
 }
+

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FakeApiService } from '../fake-api.service';
 import { Agent, AgentId, Task, ScoreAvg } from '../fake-api';
-import { averageScores } from '../utilities';
+import { averageScores, resultByType } from '../utilities';
 
 @Component({
   selector: 'app-list',
@@ -16,7 +16,10 @@ export class ListComponent implements OnInit {
   categoriesAvg: ScoreAvg[] = [];
   selected: AgentId[] = [];
   searchText: string;
+  hover: string;
   show: number = -1;
+
+  // @Output() resultByType: {} = {}; // TODO allow to pass to child component
   @Output() compareEvent: EventEmitter<Agent[]> = new EventEmitter<Agent[]>();
 
   constructor(private service: FakeApiService) { }
@@ -28,9 +31,13 @@ export class ListComponent implements OnInit {
   }
 
   showDetails(agent: Agent) {
-    this.show = this.agent && this.agent.id === agent.id ? -1 : agent.id;
-    this.agent = agent;
+    const opened = (this.agent && this.agent.id === agent.id);
+    this.show = opened ? -1 : agent.id;
+    this.agent = !opened ? agent : undefined;
+
+    // reset 
     this.categoriesAvg = [];
+
     this.calculateAvg(agent.tasks);
   }
 
@@ -43,7 +50,6 @@ export class ListComponent implements OnInit {
   }
 
   deselect(id: AgentId) {
-
     this.compareList = this.compareList.filter(item => item.id != id);
     const index = this.selected.indexOf(id);
     if (index > -1) this.selected.splice(index, 1);
@@ -51,24 +57,20 @@ export class ListComponent implements OnInit {
 
   compare() {
     this.compareEvent.emit(this.compareList);
+    this.compareList = [];
   }
 
   calculateAvg(tasks: Task[]) {
-    // Calculate the average and display.
+    // Calculate the average
     const initialVals = { avg: 0, n: 0 };
 
-    const resultByCategory = tasks.reduce((r, o) => {
-      if (r[o.category] || (r[o.category]=[])) r[o.category].push(o);
-
-      return r;
-    }, {});
+    const byCategory = resultByType(tasks, 'category');
 
     let averageScore;
+    Object.keys(byCategory).map(result => {
+      averageScore = byCategory[result].reduce(averageScores, initialVals).avg;
 
-    Object.keys(resultByCategory).map(result => {
-      averageScore = resultByCategory[result].reduce(averageScores, initialVals).avg;
-
-      this.categoriesAvg.push({ category: result, score: Math.round(averageScore) });
+      this.categoriesAvg.push({ category: result, score: Math.round(averageScore), tasks: byCategory[result] });
 
       return Math.round(averageScore);
     })

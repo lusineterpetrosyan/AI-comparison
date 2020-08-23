@@ -39,6 +39,7 @@
         <li *ngFor="let avg of categoriesAvg">
           <span>{{ avg.score }}</span>
           <small>{{ avg.category }}</small>
+          <!-- TODO: add tooltip with details of tasks or button to go to detailed page -->
         </li>
       </ul>
     </div>
@@ -47,6 +48,8 @@
 <br />
 <h3>Selected items</h3>
 <p *ngIf="!compareList?.length">No items selected</p>
+
+<!-- TODO: Set as new component -->
 <ul class="bagdes">
   <li class="bagde" *ngFor="let list of compareList">
     <span>{{list.name}}</span>

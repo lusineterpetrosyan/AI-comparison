@@ -18,4 +18,12 @@ export interface Task {
 export interface ScoreAvg {
   readonly category: string;
   readonly score: number;
+  readonly tasks: Task[];
+}
+
+
+export interface Categories {
+  readonly memory: Task[];
+  readonly logic: Task[];
+  readonly planning: Task[];
 }

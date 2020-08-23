@@ -1,1 +1,31 @@
+@import '../../assets/style/variables';
+@import '../../assets/style/mixin';
 
+.comparison {
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(space-around);
+
+  .row {
+    width: auto!important;
+    flex-grow: 1;
+    flex-direction: column;
+    @include justify-content(flex-start);
+    
+    .cell {
+      padding-top: $padding;
+      padding-bottom: $padding;
+      min-height: 51px;
+
+      &:nth-child(1) {
+        cursor: default;
+        padding-left: 20px;
+      }
+      span {
+        display: block;
+        padding: $padding/2 0;
+        border-bottom: 1px solid $gray;
+      }
+    }
+  }
+}

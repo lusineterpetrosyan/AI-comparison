@@ -1,14 +1,84 @@
-
 <ng-cotainer *ngIf="compareArray?.length">
-  <ul>
-	<li *ngFor="let item of compareArray" class="row">
-		{{ item.name }}
-	      <hr />
-	      <ng-container *ngFor="let task of item.tasks">
-	        <div *ngFor="let t of task | keyvalue">
-	          {{ t.key }} {{ t.value }}
-	        </div>
-	      </ng-container>
-	</li>
+  <button class="stroked" (click)="backTo()">Back to list</button>
+  <br />
+  <ul class="comparison table-list">
+    <li class="header row">
+      <span class="cell"></span>
+      <span class="cell">Logic</span>
+      <span class="cell">
+        <ng-container *ngFor="let task of sorted[0].logic">
+          <span>{{ task.name }}</span>
+        </ng-container>
+        <span><b>AVG.</b></span>
+      </span>
+      <span class="cell">Memory</span>
+      <span class="cell">
+        <ng-container *ngFor="let task of sorted[0].memory">
+          <span>{{ task.name }}</span>
+        </ng-container>
+        <span><b>AVG.</b></span>
+      </span>
+      <span class="cell">Planning</span>
+      <span class="cell">
+        <ng-container *ngFor="let task of sorted[0].planning">
+          <span>{{ task.name }}</span>
+        </ng-container>
+        <span><b>AVG.</b></span>
+      </span>
+    </li>
+    <li *ngFor="let item of sorted" class="row">
+      <span class="cell">{{ item.name }}</span>
+      <span class="cell"></span>
+      <span class="cell">
+        <ng-container *ngFor="let task of item.logic">
+          <span>{{ task.score }}</span>
+        </ng-container>
+        <ng-container *ngFor="let avg of item.avg">
+          <span *ngIf="avg.name === 'logic'"><b>{{ avg.value }}</b></span>
+        </ng-container>
+      </span>
+      <span class="cell"></span>
+      <span class="cell">
+        <ng-container *ngFor="let task of item.memory">
+          <span>{{ task.score }}</span>
+        </ng-container>
+        <ng-container *ngFor="let avg of item.avg">
+          <span *ngIf="avg.name === 'memory'"><b>{{ avg.value }}</b></span>
+        </ng-container>
+      </span>
+      <span class="cell"></span>
+      <span class="cell">
+        <ng-container *ngFor="let task of item.planning">
+          <span>{{ task.score }}</span>
+        </ng-container>
+        <ng-container *ngFor="let avg of item.avg">
+          <span *ngIf="avg.name === 'planning'"><b>{{ avg.value }}</b></span>
+        </ng-container>
+      </span>
+    </li>
   </ul>
+  <!-- TODO add chart comparison. Give opportunity to switch from data to chart -->
+  <!-- TODO add chart comparison for expanded data but already on another page. Give opportunity to switch from data to chart -->
+
+<div class="content" >
+<h4>Chart of avg. score by {{ combined }}</h4>
+<ng-container *ngIf="combined === 'AI'">
+  <button class="stroked" (click)="combine()">Combine by category</button>
+</ng-container>
+<ng-container *ngIf="combined === 'categories'">
+  <button class="stroked" (click)="defaultChart()">Combine by AI</button>
+</ng-container>
+<ngx-charts-bar-vertical-2d
+    [view]="view"
+    [results]="chart"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [legendTitle]="legendTitle"
+  >
+  </ngx-charts-bar-vertical-2d>
+</div>
 </ng-cotainer>

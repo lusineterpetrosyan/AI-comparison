@@ -14,8 +14,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-	  compare(newItem: Agent[]) {
-	  	this.compareArray = newItem;
-	  }
+  backTo(arr: any[]) {
+    console.log('dashboard', this.compareArray)
+    this.compareArray = [];
+  }
+  compare(arr: Agent[]) {
+  	this.compareArray = arr;
+  }
 }
