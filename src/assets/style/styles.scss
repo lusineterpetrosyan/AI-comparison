@@ -1,0 +1,167 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import 'mixin';
+
+:host, * {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: $font-default;
+  color: $dark;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: $margin/2 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  padding-right: $padding;
+
+  &,
+  &:visited,
+  &:hover {
+    color: $dark;
+    text-decoration: none;
+  }
+  
+  &:hover {
+    opacity: .5;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: $background;
+  color: $light;
+  font-weight: 600;
+
+  * {
+    color: $light;
+  }
+}
+
+.content {
+  @include flexbox();
+  margin: $margin*5.5 auto $margin*2.5;
+  padding: 0 $padding;
+  max-width: 960px;
+  width: $full-width;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  display: inline-block;
+  width: $full-width;
+  font-size: $font-default;
+  line-height: 1.8;
+  padding: 6px 12px;
+  vertical-align: middle;
+  background-color: transparent;
+  color: $dark;
+  border: 1px solid $gray;
+  @include borderRadius(3px);
+  @include transition(all 0.3s ease);
+
+  &:focus, &:active, &:hover {
+    border-color: #bbb;
+    outline: 0;
+  }
+}
+
+button {
+  color: $light;
+  border: 0;
+  height: 30px;
+  padding: 0 $padding*2;
+  cursor: pointer;
+  margin-left: 10px;
+  @include borderRadius(3px);
+
+  &.compare {
+    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+    box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
+
+    &.addTo {
+      box-shadow: rgba(33, 203, 243, 0.3) 0px 3px 5px 2px;
+      background: linear-gradient(45deg, rgb(33, 150, 243) 30%, rgb(33, 203, 243) 90%);
+    }
+  }
+
+  &.stroked {
+    border: 1px solid $gray;
+  }
+
+  &.default, &.stroked {
+    background-color: $light;
+    color: $dark;
+  }
+
+  &[disabled] {
+    box-shadow: none;
+    opacity: 0.5;
+    cursor: default;
+  }
+  &:hover:not([disabled]) {
+    box-shadow: 0 0 2px 0 rgba($dark, .2);
+  }
+}
+
+small {
+  font-size: 10px;
+  color: $dark-gray;
+  padding: 10px 0;
+}
+
+.bagdes {
+  @include flexbox();
+  @include flex-wrap(wrap);
+  
+  .bagde {
+    border: 1px solid $gray;
+    @include borderRadius(20px);
+    margin-right: 15px;
+
+    * {
+      padding: 5px 10px;
+    }
+
+    span {
+      font-size: $font-default;
+    }
+    button {
+      padding: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+      @include borderRadius(0 20px 20px 0);
+      margin: 0;
+
+      &:hover {
+        box-shadow: none;
+        background-color: rgba($gray, .5);
+      }
+    }
+  }
+}
+
+

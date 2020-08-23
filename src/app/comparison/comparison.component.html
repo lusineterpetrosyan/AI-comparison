@@ -1,0 +1,14 @@
+
+<ng-cotainer *ngIf="compareArray?.length">
+  <ul>
+	<li *ngFor="let item of compareArray" class="row">
+		{{ item.name }}
+	      <hr />
+	      <ng-container *ngFor="let task of item.tasks">
+	        <div *ngFor="let t of task | keyvalue">
+	          {{ t.key }} {{ t.value }}
+	        </div>
+	      </ng-container>
+	</li>
+  </ul>
+</ng-cotainer>

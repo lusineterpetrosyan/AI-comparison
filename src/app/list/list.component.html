@@ -1,0 +1,62 @@
+<ul class="table-list">
+  <li class="header row">
+    <span class="cell">
+      <input
+        type="text"
+        name="search"
+        [(ngModel)]="searchText"
+        autocomplete="off"
+        placeholder="Start searching by name" />
+    </span>
+    <span class="cell"><small>* Select 2 items from list to compare</small></span>
+  </li>
+  <li *ngIf="!list?.length" class="row">
+    <span class="cell">Loading...</span>
+    <span class="cell"></span>
+  </li>
+  <ng-container *ngFor="let ag of list | filter:searchText">
+    <li class="row">
+      <span class="cell">{{ ag.name }}</span>
+      <span class="cell">
+        <button class="default" (click)="showDetails(ag)">View</button>
+        <button
+          [disabled]="selected.includes(ag.id) || selected.length >= 2"
+          (click)="selectToCompare(ag.id); selected.push(ag.id)"
+          class="addTo stroked"
+        >Add to compare</button>
+      </span>
+    </li>
+    <div *ngIf="show === ag.id" class="description">
+      <small>Description</small>
+      <p>{{ agent.description }}</p>
+      <br />
+      <!-- <ng-container *ngFor="let task of agent.tasks">
+        <div class="task" *ngFor="let t of task | keyvalue">
+          {{ t.key }} {{ t.value }}
+        </div>
+      </ng-container> -->
+      <ul class="score-avg">
+        <li *ngFor="let avg of categoriesAvg">
+          <span>{{ avg.score }}</span>
+          <small>{{ avg.category }}</small>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</ul>
+<br />
+<h3>Selected items</h3>
+<p *ngIf="!compareList?.length">No items selected</p>
+<ul class="bagdes">
+  <li class="bagde" *ngFor="let list of compareList">
+    <span>{{list.name}}</span>
+    <button class="default" (click)="deselect(list.id)">Remove</button>
+  </li>
+</ul>
+<small *ngIf="selected.length == 2">
+  *If you want to select another item, remove from compare list at first
+</small>
+<div class="actions">
+  <button mat-stroked-button color="primary" class="compare" [disabled]="selected.length < 2 || selected.length > 2" (click)="compare()">Compare</button>
+
+</div>
