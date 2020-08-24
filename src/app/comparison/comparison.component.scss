@@ -10,6 +10,7 @@
     width: auto!important;
     flex-grow: 1;
     flex-direction: column;
+    border-bottom: none;
     @include justify-content(flex-start);
     
     .cell {
@@ -26,6 +27,15 @@
         padding: $padding/2 0;
         border-bottom: 1px solid $gray;
       }
+    }
+
+    .category {
+      font-weight: bold!important;
+      text-transform: capitalize;
+      min-height: 20px;
+      height: 20px;
+      padding-bottom: 15px;
+      padding-top: 15px;
     }
   }
 }

@@ -60,13 +60,13 @@ export class ComparisonComponent implements OnInit {
       Object.keys(byCategory).map(result => {
         const initialVals = { avg: 0, n: 0 };
         const averageScore = byCategory[result].reduce(averageScores, initialVals).avg;
-        const avg = { name: result, value: Math.round(averageScore) };
+        const avg = { name: result, value: Math.round(averageScore), score: Math.round(averageScore) };
 
         categoriesAvg.push(avg);
       })
 
       this.chart.push({ ...{ name: arr.name }, ...{ series: categoriesAvg} })
-      this.sorted.push({ ...byCategory, ...{ name: arr.name }, ...{ avg: categoriesAvg } });
+      this.sorted.push({ [arr.name]: { ...byCategory, ...{ avg: categoriesAvg } } });
     })
   }
 
@@ -75,15 +75,18 @@ export class ComparisonComponent implements OnInit {
     let combined = [];
     this.combined = 'categories';
 
-    this.sorted.map(sr => {
-      sr.avg.map(avg => {
-        const filter = ch.filter(v => v.name === avg.name);
-        if(filter.length) {
-          filter[0].series.push({ name: sr.name, value: avg.value });
-          combined.push({...filter[0]});
-        } else {
-          ch.push({ ...{ name: avg.name }, ...{ series: [{ name: sr.name, value: avg.value }] }})
-        }
+    this.sorted.map(k=> {
+      Object.keys(k).map(sr => {
+        k[sr]['avg'].map(avg => {
+          const filter = ch.filter(v => v.name === avg.name);
+          if(filter.length) {
+            filter[0].series.push({ name: sr, value: avg.value });
+            combined.push({...filter[0]});
+          } else {
+            ch.push({ ...{ name: avg.name }, ...{ series: [{ name: sr, value: avg.value }] }})
+          }
+        })
+
       })
     })
 
@@ -92,6 +95,7 @@ export class ComparisonComponent implements OnInit {
     this.chart = combined;
   }
 
+// TODO: For chart actions
  // onSelect(data): void {
  //    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
  //  }
