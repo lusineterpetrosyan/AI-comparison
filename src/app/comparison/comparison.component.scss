@@ -27,10 +27,14 @@
         padding: $padding/2 0;
         border-bottom: 1px solid $gray;
       }
+
+      .avg {
+        font-weight: bold !important;
+      }
     }
 
     .category {
-      font-weight: bold!important;
+      font-weight: bold !important;
       text-transform: capitalize;
       min-height: 20px;
       height: 20px;

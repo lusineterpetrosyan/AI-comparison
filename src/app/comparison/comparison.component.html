@@ -10,12 +10,15 @@
         <ng-container *ngFor="let ag of sorted[0] | keyvalue">
           <span class="cell"></span>
           <ng-container *ngFor="let tasksByCat of ag.value | keyvalue; last as isLast">
-            <span class="cell category">{{ tasksByCat.key }}</span>
-            <span class="cell">
-              <ng-container *ngFor="let task of tasksByCat.value">
-                <span>{{ task.name }}</span>
-              </ng-container>
-            </span>
+            <ng-container *ngIf="tasksByCat.key !== 'avg'">
+              <span class="cell category">{{ tasksByCat.key }}</span>
+              <span class="cell">
+                <ng-container *ngFor="let task of tasksByCat.value">
+                  <span>{{ task.name }}</span>
+                </ng-container>
+                <span class="avg">Avg.</span>
+              </span>
+          </ng-container>
           </ng-container>
         </ng-container>
       </li>
@@ -24,12 +27,17 @@
           <span class="cell">{{ ag.key }}</span>
           <span class="cell category"></span>
           <ng-container *ngFor="let tasksByCat of ag.value | keyvalue; last as isLast">
-            <span class="cell">
-              <ng-container *ngFor="let task of tasksByCat.value">
-                <span>{{ task.score }}</span>
-              </ng-container>
-            </span>
-            <span *ngIf="!isLast" class="cell category"></span>
+            <ng-container *ngIf="tasksByCat.key !== 'avg'">
+              <span class="cell">
+                <ng-container *ngFor="let task of tasksByCat.value">
+                  <span>{{ task.score }}</span>
+                </ng-container>
+                <ng-container *ngFor="let avg of ag.value['avg']">
+                  <span class="avg" *ngIf="avg.name === tasksByCat.key">{{avg.score}}</span>
+                </ng-container>
+              </span>
+              <span *ngIf="!isLast" class="cell category"></span>
+            </ng-container>
           </ng-container>
         </ng-container>
       </li>
