@@ -30,15 +30,16 @@
       <small>Description</small>
       <p>{{ agent.description }}</p>
       <br />
-      <!-- <ng-container *ngFor="let task of agent.tasks">
-        <div class="task" *ngFor="let t of task | keyvalue">
-          {{ t.key }} {{ t.value }}
-        </div>
-      </ng-container> -->
       <ul class="score-avg">
         <li *ngFor="let avg of categoriesAvg">
           <span>{{ avg.score }}</span>
-          <small>{{ avg.category }}</small>
+          <small>avg. by {{ avg.category }}</small>
+          <div class="task">
+            <h6>Details</h6>
+            <ng-container *ngFor="let task of avg.tasks">
+              <div>{{ task.score }}<small>{{ task.name }}</small></div>
+            </ng-container>
+          </div>
           <!-- TODO: add tooltip with details of tasks or button to go to detailed page -->
         </li>
       </ul>

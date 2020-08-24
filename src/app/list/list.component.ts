@@ -39,6 +39,7 @@ export class ListComponent implements OnInit {
     this.categoriesAvg = [];
 
     this.calculateAvg(agent.tasks);
+    console.log('this.categoriesAvg', this.categoriesAvg)
   }
 
   selectToCompare(id: AgentId) {

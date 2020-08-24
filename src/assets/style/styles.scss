@@ -302,5 +302,16 @@ small {
     font-size: 28px;
     display: block;
   }
+
+  .task {
+    border-top: 1px solid $gray;
+    margin-top: $margin;
+    padding-top: $padding;
+
+    small {
+      display: block;
+      padding-top: 5px;
+    }
+  }
 }
 
