@@ -39,7 +39,7 @@ export function asFallibleAsyncResponse<T>(data: T): Promise<T> {
 }
 
 
-// Result by category function
+// Result by type function (ex. category, name etc.)
 // ----------------------------------------------------------------------------
 
 export function resultByType(tasks: Task[], type: string = 'category') {

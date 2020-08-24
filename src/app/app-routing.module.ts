@@ -5,10 +5,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
     {
-        path: 'my-new-route',
-        component: ListComponent,
-    },
-    {
         path: '',
         component: DashboardComponent,
     },
